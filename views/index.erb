@@ -11,16 +11,25 @@
 
 </head>
 
-<body style="background-image: url('index.jpg')">
+<body  style="background-color:black">
 
-    <h1 class="w3-center w3-jumbo  w3-text-orange "> ...Bienvenido... </h1>
+    <nav class="w3-container w3-border w3-brown">
+        <% if is_logged? %>
+        <a class="w3-text-white w3-large" href='/logout'>Desloguearse</a><br>
+        <% else %>
+        <a class="w3-text-white w3-large" href='/login'>Loguearse con twitter</a><br>
+        <% end %>
+    </nav>
 
-    <div class="w3-container w3-text-red">
-        <p class="w3-xlarge w3-margin-left">Disfruta de nuestras mejores historias de terror para no poder dormir</p>
+    <h1 class="w3-center w3-jumbo  w3-text-red "> ...Bienvenido... </h1>
+
+    <div class="w3-container">
+        <p class="w3-xlarge w3-text-green">Disfruta de las mas <b>tenebrosas</b> historias de terror para no poder dormir.</p>
+
+
     </div>
 
     <div class="w3-panel w3-text-red">
-
         <h2 class="w3-margin-left">Al azar</h2>
 
         <div class="w3-row-padding">
@@ -89,8 +98,6 @@
             
         </div>
     </div>
-
-
 
 </body>
 </html>

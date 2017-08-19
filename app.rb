@@ -1,25 +1,11 @@
 require 'sinatra'
 require 'omniauth-twitter'
 
+require_relative 'kparser'
+
 require 'json'
 
-
-$hello = []
-
-def parse_keys
-
-    File.open("appkeys.txt", "r") do |f|
-        f.each_line do |line|
-            $hello.push line.chomp
-            #_hello[line]
-        end
-    end
-
-    puts $hello
-
-end
-
-parse_keys()
+$khello = parse_keys()
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
@@ -27,13 +13,21 @@ configure do
   enable :sessions
 end
 
+
 use OmniAuth::Builder do
-  provider :twitter, $hello[0], $hello[1] #'1of76DWNqZPqmc9AIl4YWtWJh', 'jnUAuQDL3tg2G5WiFqq9d9FapWQf7WimZnCGMbrTTm6N5fIgu1'
+  provider :twitter, $khello[0], $khello[1] #'1of76DWNqZPqmc9AIl4YWtWJh', 'jnUAuQDL3tg2G5WiFqq9d9FapWQf7WimZnCGMbrTTm6N5fIgu1'
+end
+
+
+helpers do
+    def is_logged?
+        session[:username]
+    end
 end
 
 
 get '/login' do
-    if session[:admin]
+    if session[:user]
         redirect to("/")
     else
         redirect to("/auth/twitter")
@@ -41,16 +35,22 @@ get '/login' do
 end
 
 get '/auth/twitter/callback' do
-  env['omniauth.auth'] ? session[:admin] = true : halt(401,'Not Authorized')
-  "You are now logged in as #{env['omniauth.auth']}"
+    halt(401,'Not Authorized') if not env['omniauth.auth']
+    session[:user] = env['omniauth.auth']['uid']
+    session[:username] = env['omniauth.auth']['info']['name']
+
+    redirect to("/")
 end
 
 get '/auth/failure' do
-  params[:message]
+    params[:message]
 end
 
 get '/logout' do
-    session[:admin] = nil
+    session[:user] = nil
+    session[:username] = nil
+
+    redirect to("/")
 end
 
 get '/:tale' do
