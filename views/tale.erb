@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<!-- Add your HTML Here  -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    <link rel="stylesheet" href="tale.css"> 
+    <script type="text/javascript" src="tale.js"></script>
+</head>
+
+<body style="background-image: url('skulls.jpg')">
+
+    <div class="w3-container ">
+        <div class="w3-panel w3-center w3-text-lime">
+            <nav>
+                <a href="#">Inicio</a>
+                <a href="#comments">Comentarios</a>
+            </nav>
+
+            <div id="taleregion">
+                <h1><%= @taledata[:name] %></h1>
+                <h2>Compartido por: <%= @taledata[:author] %></h2>
+            </div>
+        </div>
+
+        <div class="w3-container w3-center">
+            <image id="taleimage" class="w3-border w3-border-gray" src="tale.gif" width=320px height=240px onclick="playImageSound()"></image>
+            <audio id="taleimagesound" src="imgsound.mp3"></audio>
+        </div>
+
+        <div class="w3-container w3-center ">
+
+            <audio controls id="talesound" class="w3-border">
+                <source src="talesnd.mp3" type="audio/mpeg">
+                Formato invalido.
+            </audio>
+            
+        </div>
+
+        <div class="w3-panel w3-center w3-text-lime w3-margin-bottom">
+            <h3>Velocidad</h3>
+            <input id="speedslider" type="range" min="0" max="5" value="1" step="0.1" onchange="updateSpeed(this.value)" />
+        </div>
+
+        <div class="w3-panel w3-center w3-text-lime">
+            <button onclick="startTale()" class="w3-button w3-border w3-margin-bottom w3-large">COMENZAR</button>
+            <button onclick="pauseTale()" class="w3-button w3-border w3-margin-bottom w3-large">PAUSAR</button>
+        </div>
+
+        <div class="w3-row">
+            <div class="w3-col w3-container" style="width:10%"></div>
+            <div class="w3-col w3-container" style="width:80%">
+            <div id="talecontent" class="w3-text-lime w3-xlarge w3-left-align w3-border w3-black w3-padding w3-border-gray">
+            </div>
+            </div>
+            <div class="w3-col w3-container" style="width:10%"></div>
+        </div> 
+
+        <div id="comments" class="w3-container w3-margin-top w3-text-lime w3-center">
+
+            <button onclick="showComments('talecomments')" class="w3-button"><h3>Comentarios</h3></button>
+            
+            <div id="talecomments" class="w3-hide w3-container">
+                <ul class="w3-ul w3-border w3-black w3-text-lime w3-left-align">
+                    <li><b>Juan</b><p class="comment">Me gusto mucho</p></li>
+                    <li><b>Pedro</b><p class="comment">Muy buena agrega mas cuentos por favor, si?</p></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
